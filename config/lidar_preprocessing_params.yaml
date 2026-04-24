@@ -1,5 +1,4 @@
-core:
-  input_topic: "livox_front/points"
+input_topic: "livox_front/points"
 
 imu_params:
   topic: "livox_front/imu"
