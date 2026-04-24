@@ -520,8 +520,8 @@ void LidarPreProcessingNodelet<PointT>::update_enabled_plugins(const Preprocessi
 {
     m_enabled_plugins.clear();
 
-    constexpr std::array<const char *, 5> kPluginOrder = {kRorKey, kLivoxTagKey, kDeskewKey, kVoxelKey,
-                                                          kGravityAlignKey};
+    constexpr std::array<const char *, 5> kPluginOrder = {kDeskewKey, kGravityAlignKey, kVoxelKey, kRorKey,
+                                                          kLivoxTagKey};
     for (const auto *key: kPluginOrder)
     {
         if (!is_preprocessor_enabled(key, config))
