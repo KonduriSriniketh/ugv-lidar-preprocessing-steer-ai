@@ -59,7 +59,7 @@ PLUGINLIB_EXPORT_CLASS(lidar_preprocessing_plugins::LivoxPointCloudDeskewPlugin,
                        lidar_preprocessing_plugins::LivoxPreprocessingPlugins)
 PLUGINLIB_EXPORT_CLASS(lidar_preprocessing_plugins::LivoxGravityAlignPlugin,
                        lidar_preprocessing_plugins::LivoxPreprocessingPlugins)
-PLUGINLIB_EXPORT_CLASS(lidar_preprocessing_plugins::LivoxVoxelGridFilterPlugins,
+PLUGINLIB_EXPORT_CLASS(lidar_preprocessing_plugins::LivoxVoxelGridFilterPlugin,
                        lidar_preprocessing_plugins::LivoxPreprocessingPlugins)
 PLUGINLIB_EXPORT_CLASS(lidar_preprocessing_plugins::LivoxRadiusOutlierRemovalPlugin,
                        lidar_preprocessing_plugins::LivoxPreprocessingPlugins)
