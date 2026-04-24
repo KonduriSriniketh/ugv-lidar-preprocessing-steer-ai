@@ -82,7 +82,7 @@ endif()
 
 # Nodelet
 file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS "src/*.cpp")
-list(FILTER SOURCES EXCLUDE REGEX "src/ugv_lidar_preprocessing/.*")
+list(FILTER SOURCES EXCLUDE REGEX "${CMAKE_CURRENT_SOURCE_DIR}/src/ugv_lidar_preprocessing/.*")
 add_library(${PROJECT_NAME} ${SOURCES})
 target_compile_definitions(${PROJECT_NAME} PRIVATE PCL_NO_PRECOMPILE)
 target_link_libraries(
