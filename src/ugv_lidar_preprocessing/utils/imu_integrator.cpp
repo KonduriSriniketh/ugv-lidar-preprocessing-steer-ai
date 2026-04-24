@@ -79,7 +79,7 @@ bool ImuIntegrator::execute_imu_calibration(
 
     if (m_external_velocity_max_age_sec > 0.0)
     {
-        if (m_calibration_gate_status.velocity_age_sec < m_external_velocity_max_age_sec)
+        if (m_calibration_gate_status.velocity_age_sec > m_external_velocity_max_age_sec)
         {
             m_calibration_gate_status.blocked = true;
             m_calibration_gate_status.external_velocity_stale = true;
