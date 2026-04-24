@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="namespace" default="rbuggy" />
+    <arg name="perception_nodelet_name" default="debug" />
+    <arg name="standalone" default="true" />
+    <arg name="params_file"
+        default="$(find ugv_lidar_preprocessing)/config/lidar_preprocessing_params.yaml" />
+    <arg name="sensor" default="Ouster" /> <!-- Options include Ouster, Velodyne and Livox -->
+    <arg name="node_name" default="ugv_lidar_pre_processing_nodelet" />
+
+    <!-- Nodelet Manager -->
+    <group if="$(arg standalone)">
+        <node pkg="nodelet"
+            type="nodelet"
+            name="$(arg perception_nodelet_name)"
+            args="manager"
+            output="screen"
+            ns="$(arg namespace)"
+            clear_params="true" />
+    </group>
+    <!-- Nodelet Manager -->
+
+    <!-- Pre-processing for Ouster -->
+    <group if="$(eval arg('sensor') == 'Ouster')">
+        <node pkg="nodelet"
+            type="nodelet"
+            name="$(arg node_name)"
+            ns="$(arg namespace)"
+            args="load ugv_lidar_preprocessing/OusterLidarPreProcessingNodelet $(arg perception_nodelet_name)"
+            output="screen"
+            clear_params="true">
+            <rosparam file="$(arg params_file)" command="load" />
+        </node>
+    </group>
+
+    <!-- Pre-processing for Velodyne -->
+    <group if="$(eval arg('sensor') == 'Velodyne')">
+        <node pkg="nodelet"
+            type="nodelet"
+            name="$(arg node_name)"
+            ns="$(arg namespace)"
+            args="load ugv_lidar_preprocessing/VelodyneLidarPreProcessingNodelet $(arg perception_nodelet_name)"
+            output="screen"
+            clear_params="true">
+            <rosparam file="$(arg params_file)" command="load" />
+        </node>
+    </group>
+
+    <!-- Pre-processing for Livox -->
+    <group if="$(eval arg('sensor') == 'Livox')">
+        <node pkg="nodelet"
+            type="nodelet"
+            name="$(arg node_name)"
+            ns="$(arg namespace)"
+            args="load ugv_lidar_preprocessing/LivoxLidarPreProcessingNodelet $(arg perception_nodelet_name)"
+            output="screen"
+            clear_params="true">
+            <rosparam file="$(arg params_file)" command="load" />
+        </node>
+    </group>
+</launch>

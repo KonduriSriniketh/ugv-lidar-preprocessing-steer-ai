@@ -1,0 +1,22 @@
+.catkin_tools
+build
+devel
+install
+logs
+*.bag
+
+# dynamic_reconfigure generated sources
+cfg/cpp/
+*.cfgc
+
+# python bytecode
+__pycache__/
+*.pyc
+
+# editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store

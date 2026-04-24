@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>ugv_lidar_preprocessing</name>
+  <version>0.1.0</version>
+  <description>LiDAR pointcloud preprocessing and deskewing with sensor-specific plugins.</description>
+
+  <maintainer email="vipin.sharma@tii.ae">Vipin Sharma</maintainer>
+
+  <license>BSD</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <!-- ROS Dependencies -->
+  <depend>roscpp</depend>
+  <depend>std_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>nav_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>nodelet</depend>
+
+  <!-- Additional Dependencies -->
+  <depend>pluginlib</depend>
+  <depend>pcl_conversions</depend>
+  <depend>pcl_ros</depend>
+  <depend>dynamic_reconfigure</depend>
+  <depend>tf2_ros</depend>
+
+  <export>
+    <nodelet plugin="${prefix}/nodelet_plugins.xml" />
+    <ugv_lidar_preprocessing plugin="${prefix}/lidar_preprocessing_plugins.xml" />
+  </export>
+</package>

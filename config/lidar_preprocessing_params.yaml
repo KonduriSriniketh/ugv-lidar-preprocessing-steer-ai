@@ -1,0 +1,78 @@
+core:
+  input_topic: "livox_front/points"
+
+imu_params:
+  topic: "livox_front/imu"
+  buffer_size: 1.0 # Seconds of IMU data to buffer for deskewing
+
+  calibration:
+    enabled: true
+    # Duration in seconds for initial IMU calibration
+    # Vehicle must remain stationary during this period
+    # Typical range: 2-10 seconds depending on sensor quality
+    time: 3
+
+    external_velocity:
+      # Max linear speed from odom to allow calibration (m/s)
+      max_speed_mps: 0.05
+      # Max allowed age of odom velocity sample (s)
+      max_age_sec: 0.5
+
+    gyro:
+      # Initial gyroscope bias values [x, y, z] in rad/s
+      # Used when calibration is disabled or as prior for calibration
+      bias: [ 0.0, 0.0, 0.0 ]
+    accel:
+      # Initial accelerometer bias values [x, y, z] in m/s²
+      # Used when calibration is disabled or as prior for calibration
+      bias: [ 0.0, 0.0, 0.0 ]
+
+      # Scale and misalignment matrix for accelerometer (3x3 row-major)
+      # Diagonal elements: scale factors for each axis
+      # Off-diagonal elements: cross-axis sensitivity corrections
+      # Format: [m00, m01, m02, m10, m11, m12, m20, m21, m22]
+      sm:   [ 1.,  0.,  0.,
+              0.,  1.,  0.,
+              0.,  0.,  1. ]
+
+  integration:
+    integration_params:
+      # Use approximate gravity direction during initialization
+      # When true, simplifies initial alignment assuming gravity points downward
+      # Set to false for applications with significant pitch/roll at startup
+      approximate_gravity: true
+
+      # Gravitational acceleration constant in m/s²
+      # Used for IMU integration and gravity alignment
+      # Standard value: 9.80665 (varies slightly by location)
+      gravity_mps2: 9.80665
+
+pointcloud_deskew:
+  enabled: true
+
+  # Lidar to IMU extrinsic calibration parameters
+  # Refer to LiDAR datasheet for accurate values
+  lidar_to_imu_translation: [0.0, 0.0, 0.0]
+  lidar_to_imu_rotation: [1.0, 0.0, 0.0,
+                          0.0, 1.0, 0.0,
+                          0.0, 0.0, 1.0]
+
+gravity_align:
+  enabled: true
+
+voxel_grid_filter:
+  enabled: false
+  leaf_size: 0.1 # Leaf size in meters for downsampling
+
+radius_outlier_removal:
+  enabled: false
+  radius: 0.5 # Radius in meters to search for neighboring points
+  min_neighbors: 5 # Minimum neighbors required to retain a point
+
+livox_tag_filter:
+  enabled: true
+  remove_high_confidence_noise: true
+  remove_moderate_confidence_noise: true
+  remove_low_confidence_noise: false
+  remove_intensity_noise: true
+  output_per_return: false
