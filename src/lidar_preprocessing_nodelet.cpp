@@ -1082,39 +1082,17 @@ void LidarPreProcessingNodelet<PointT>::publish_gravity_alignment_tf(
     if (aligned_frame.empty() || aligned_frame == lidar_frame)
         return;
 
-    if (!m_cached_lidar_to_base_valid || m_cached_lidar_frame != lidar_frame)
-    {
-        try
-        {
-            m_cached_lidar_to_base_tf =
-                    m_tf_buffer.lookupTransform(m_gravity_parent_frame, lidar_frame, ros::Time(0), ros::Duration(0.1));
-            m_cached_lidar_to_base_valid = true;
-            m_cached_lidar_frame = lidar_frame;
-        }
-        catch (const tf2::TransformException &ex)
-        {
-            NODELET_WARN_STREAM_THROTTLE(2.0, "Failed to lookup TF from '" << lidar_frame << "' to '"
-                                                                           << m_gravity_parent_frame
-                                                                           << "': " << ex.what());
-            m_cached_lidar_to_base_valid = false;
-            return;
-        }
-    }
-
-    tf2::Transform tf_base_lidar;
-    tf2::fromMsg(m_cached_lidar_to_base_tf.transform, tf_base_lidar);
-
-    const Eigen::Quaternionf q = align_q;
-    tf2::Quaternion q_lidar_gravity(q.x(), q.y(), q.z(), q.w());
-    tf2::Transform tf_lidar_gravity(q_lidar_gravity, tf2::Vector3(0.0, 0.0, 0.0));
-
-    const tf2::Transform tf_base_gravity = tf_base_lidar * tf_lidar_gravity;
-
     geometry_msgs::TransformStamped tf_msg;
     tf_msg.header.stamp = input_msg->header.stamp;
-    tf_msg.header.frame_id = m_gravity_parent_frame;
+    tf_msg.header.frame_id = lidar_frame;
     tf_msg.child_frame_id = aligned_frame;
-    tf_msg.transform = tf2::toMsg(tf_base_gravity);
+    tf_msg.transform.translation.x = 0.0;
+    tf_msg.transform.translation.y = 0.0;
+    tf_msg.transform.translation.z = 0.0;
+    tf_msg.transform.rotation.x = align_q.x();
+    tf_msg.transform.rotation.y = align_q.y();
+    tf_msg.transform.rotation.z = align_q.z();
+    tf_msg.transform.rotation.w = align_q.w();
 
     m_tf_broadcaster->sendTransform(tf_msg);
 }
