@@ -1058,7 +1058,7 @@ void LidarPreProcessingNodelet<PointT>::publish_output(const pcl::PointCloud<Poi
     Eigen::Quaternionf align_q;
     if (get_gravity_alignment(align_q))
     {
-        // Intentionally keep the original frame_id even when alignment is available.
+        output_msg.header.frame_id = gravity_aligned_frame(input_msg->header.frame_id);
     }
     m_pointcloud_publisher.publish(output_msg);
 }
