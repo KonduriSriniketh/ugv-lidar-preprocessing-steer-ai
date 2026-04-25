@@ -19,6 +19,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ros-noetic-sensor-msgs \
     ros-noetic-std-msgs \
     ros-noetic-roslaunch \
+    ros-noetic-rosbag \
+    ros-noetic-topic-tools \
+    ros-noetic-tf \
+    ros-noetic-tf2-tools \
+    ros-noetic-rviz \
+    ros-noetic-rqt-reconfigure \
+    x11-apps \
     libpcl-dev libeigen3-dev \
  && rm -rf /var/lib/apt/lists/*
 
