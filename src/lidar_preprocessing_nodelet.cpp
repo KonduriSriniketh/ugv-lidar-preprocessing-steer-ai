@@ -1082,6 +1082,11 @@ void LidarPreProcessingNodelet<PointT>::publish_gravity_alignment_tf(
     if (aligned_frame.empty() || aligned_frame == lidar_frame)
         return;
 
+    // The gravity_align plugin applies align_q to each point (p_gravity = align_q * p_lidar).
+    // The published TF must be the inverse rotation so ROS consumers can recover p_lidar
+    // when transforming back: p_lidar = align_q^-1 * p_gravity.
+    const Eigen::Quaternionf tf_q = align_q.conjugate();
+
     geometry_msgs::TransformStamped tf_msg;
     tf_msg.header.stamp = input_msg->header.stamp;
     tf_msg.header.frame_id = lidar_frame;
@@ -1089,10 +1094,10 @@ void LidarPreProcessingNodelet<PointT>::publish_gravity_alignment_tf(
     tf_msg.transform.translation.x = 0.0;
     tf_msg.transform.translation.y = 0.0;
     tf_msg.transform.translation.z = 0.0;
-    tf_msg.transform.rotation.x = align_q.x();
-    tf_msg.transform.rotation.y = align_q.y();
-    tf_msg.transform.rotation.z = align_q.z();
-    tf_msg.transform.rotation.w = align_q.w();
+    tf_msg.transform.rotation.x = tf_q.x();
+    tf_msg.transform.rotation.y = tf_q.y();
+    tf_msg.transform.rotation.z = tf_q.z();
+    tf_msg.transform.rotation.w = tf_q.w();
 
     m_tf_broadcaster->sendTransform(tf_msg);
 }
