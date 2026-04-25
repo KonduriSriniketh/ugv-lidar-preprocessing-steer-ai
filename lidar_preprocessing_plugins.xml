@@ -73,7 +73,7 @@
 
     <class
         name="voxel_grid"
-        type="lidar_preprocessing_plugins::LivoxVoxelGridFilterPlugins"
+        type="lidar_preprocessing_plugins::LivoxVoxelGridFilterPlugin"
         base_class_type="lidar_preprocessing_plugins::LivoxPreprocessingPlugins">
         <description>
             Voxel grid preprocessor for Livox pointclouds.
