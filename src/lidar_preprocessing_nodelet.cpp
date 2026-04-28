@@ -735,7 +735,7 @@ void LidarPreProcessingNodelet<PointT>::sort_points_by_time(double sweep_ref_tim
     if (cloud.points.size() > 1)
     {
         std::sort(cloud.points.begin(), cloud.points.end(), [sweep_ref_time](const PointT &lhs, const PointT &rhs) {
-            return lidar_point_types::PointTimeAccessor<PointT>::time_seconds(lhs, sweep_ref_time) >
+            return lidar_point_types::PointTimeAccessor<PointT>::time_seconds(lhs, sweep_ref_time) <
                    lidar_point_types::PointTimeAccessor<PointT>::time_seconds(rhs, sweep_ref_time);
         });
     }
