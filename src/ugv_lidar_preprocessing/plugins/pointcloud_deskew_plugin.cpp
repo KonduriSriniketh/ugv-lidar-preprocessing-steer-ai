@@ -89,7 +89,7 @@ void PointCloudDeskewPlugin<PointT>::process(const plugins_context_data::Preproc
     }
 
     // Take the median timestamp as the reference
-    std::size_t reference_index = timestamps.size() / 2 + 1;
+    std::size_t reference_index = timestamps.size() / 2;
 
     // Always start integrating from the FIRST timestamp of the CURRENT scan.
     double imu_integration_start_time = timestamps.front();
