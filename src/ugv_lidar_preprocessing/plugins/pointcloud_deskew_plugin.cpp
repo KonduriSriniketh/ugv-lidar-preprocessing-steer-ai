@@ -131,7 +131,7 @@ void PointCloudDeskewPlugin<PointT>::process(const plugins_context_data::Preproc
     output.header.stamp = timestamps[reference_index];
     output.is_dense = input.is_dense;
 
-    if (result.reference_state_valid && reference_index == 0)
+    if (result.reference_state_valid)
     {
         // We must push the calculated state (velocity/bias) back into the
         // integrator so it is preserved for the next scan.
